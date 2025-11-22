@@ -32,43 +32,11 @@ public class Main {
                         String cname = scanner.nextLine();
                         Customer customer = new Customer(cname);
                         customer.displayInfo(); // Use inherited method following OOP principles
-
-                        boolean browsing = true;
-                        while (browsing) {
-                            System.out.println("\n--- Main Menu ---");
-                            System.out.println("1. View Appetizers");
-                            System.out.println("2. View Main Courses");
-                            System.out.println("3. View Desserts");
-                            System.out.println("4. View Drinks");
-                            System.out.println("5. View Full Menu");
-                            System.out.println("6. Start Ordering");
-                            System.out.print("Choose an option: ");
-
-                            if (scanner.hasNextInt()) {
-                                int option = scanner.nextInt();
-                                scanner.nextLine();
-
-                                switch (option) {
-                                    case 1 -> MenuDisplay.displayByCategory(menu, "Appetizer");
-                                    case 2 -> MenuDisplay.displayByCategory(menu, "Main Course");
-                                    case 3 -> MenuDisplay.displayByCategory(menu, "Dessert");
-                                    case 4 -> MenuDisplay.displayByCategory(menu, "Drinks");
-                                    case 5 -> MenuDisplay.displayFullMenu(menu);
-                                    case 6 -> {
-                                        browsing = false;
-                                        customer.getOrder().startOrdering(scanner, menu, customer.getName());
-                                    }
-                                    default -> System.out.println("Invalid option. Please try again.");
-                                }
-                            } else {
-                                scanner.nextLine();
-                                System.out.println("Invalid input. Please enter a number (1-6).");
-                            }
-                        }
+                        customer.browseMenu(scanner, menu); // Customer handles its own browsing
                     }
                     case 2 -> {
                         if (admin.login(scanner)) {
-                            admin.displayInfo(); // Display admin info using inherited method
+                            admin.displayInfo();     // Display admin info using inherited method
                             admin.modifyMenuByCategory(menu, scanner);
                             MenuDisplay.saveMenu(menu); // Save changes immediately
                         }
