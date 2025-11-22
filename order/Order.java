@@ -2,6 +2,7 @@ package order;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import menus.*;
@@ -11,9 +12,14 @@ public class Order {
 
     public void saveReceipt(String customerName) {
         String fileName = customerName.replaceAll("[^a-zA-Z0-9 ]", "").trim() + "_receipt.txt";
+        
+        // Generate random transaction number
+        Random random = new Random();
+        int transactionNumber = 100000 + random.nextInt(900000); // 6-digit number (100000-999999)
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName, true))) {
             pw.println("----- RECEIPT -----");
+            pw.println("Transaction Number: " + transactionNumber);
 
             for (MenuItem item : items) {
                 pw.println(item.getName() + " - ₱" + String.format("%.2f", item.getPrice()));
@@ -24,6 +30,7 @@ public class Order {
             pw.println("Customer: " + customerName);
 
             System.out.println("\nReceipt saved as: " + fileName);
+            System.out.println("Transaction Number: " + transactionNumber);
         } catch (IOException e) {
             System.out.println("Error saving receipt: " + e.getMessage());
         }
@@ -44,7 +51,12 @@ public class Order {
     }
 
     public void displayReceipt(String customerName) {
+        // Generate random transaction number
+        Random random = new Random();
+        int transactionNumber = 100000 + random.nextInt(900000); // 6-digit number (100000-999999)
+        
         System.out.println("\n--- Receipt ---");
+        System.out.println("Transaction Number: " + transactionNumber);
         for (MenuItem item : items) item.displayItem();
         System.out.println("Total (with 12% VAT): ₱" + String.format("%.2f", calculateTotal()));
         System.out.println("Name of the customer: " + customerName);
