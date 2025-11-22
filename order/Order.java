@@ -62,5 +62,8 @@ public class Order {
         System.out.println("Name of the customer: " + customerName);
     }
 
-   
+    // Get items list (for Customer to access)
+    public ArrayList<MenuItem> getItems() {
+        return items;
+    }
 }
