@@ -121,9 +121,9 @@ public class Customer extends User {
             }
 
             // Display current order
-            if (!order.isEmpty()) {
+            if (!isOrderEmpty()) {
                 System.out.println("\nCurrent Order:");
-                order.displayItems();
+                displayOrderItems();
             }
 
             System.out.print("\nEnter item number to add to order, 'r' to remove an item, or 0/back to go back: ");
@@ -157,13 +157,13 @@ public class Customer extends User {
     }
 
     private void removeItemFromOrder(Scanner scanner) {
-        if (order.isEmpty()) {
+        if (isOrderEmpty()) {
             System.out.println("No items in your order to remove.");
             return;
         }
 
         System.out.println("\n--- Remove Item ---");
-        order.displayItems();
+        displayOrderItems();
 
         System.out.print("Enter item number to remove (0 to cancel): ");
         String input = scanner.nextLine().trim();
@@ -175,8 +175,8 @@ public class Customer extends User {
 
         try {
             int choice = Integer.parseInt(input);
-            if (choice > 0 && choice <= order.getItemCount()) {
-                MenuItem removed = order.removeItem(choice - 1);
+            if (choice > 0 && choice <= getOrderItemCount()) {
+                MenuItem removed = removeOrderItem(choice - 1);
                 if (removed != null) {
                     System.out.println("✓ Removed: " + removed.getName());
                 }
@@ -186,6 +186,31 @@ public class Customer extends User {
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a valid number.");
         }
+    }
+
+    // Helper methods for order management (moved from Order.java)
+    private boolean isOrderEmpty() {
+        return order.getItems().isEmpty();
+    }
+
+    private int getOrderItemCount() {
+        return order.getItems().size();
+    }
+
+    private void displayOrderItems() {
+        ArrayList<MenuItem> items = order.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            items.get(i).displayItem();
+        }
+    }
+
+    private MenuItem removeOrderItem(int index) {
+        ArrayList<MenuItem> items = order.getItems();
+        if (index >= 0 && index < items.size()) {
+            return items.remove(index);
+        }
+        return null;
     }
 }
 
