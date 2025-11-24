@@ -26,7 +26,7 @@ public class Customer extends User {
     }
 
     // Customer browsing and menu interaction
-    public void browseMenu(Scanner scanner, ArrayList<MenuItem> menu) {
+    public void browseMenu(Scanner input, ArrayList<MenuItem> menu) {
         boolean browsing = true;
         while (browsing) {
             System.out.println("\n--- Main Menu ---");
@@ -38,9 +38,9 @@ public class Customer extends User {
             System.out.println("6. Start Ordering");
             System.out.print("Choose an option: ");
 
-            if (scanner.hasNextInt()) {
-                int option = scanner.nextInt();
-                scanner.nextLine();
+            if (input.hasNextInt()) {
+                int option = input.nextInt();
+                input.nextLine();
 
                 switch (option) {
                     case 1 -> MenuDisplay.displayByCategory(menu, "Appetizer");
@@ -50,19 +50,19 @@ public class Customer extends User {
                     case 5 -> MenuDisplay.displayFullMenu(menu);
                     case 6 -> {
                         browsing = false;
-                        startOrdering(scanner, menu);
+                        startOrdering(input, menu);
                     }
                     default -> System.out.println("Invalid option. Please try again.");
                 }
             } else {
-                scanner.nextLine();
+                input.nextLine();
                 System.out.println("Invalid input. Please enter a number (1-6).");
             }
         }
     }
 
     // Customer ordering process
-    public void startOrdering(Scanner scanner, ArrayList<MenuItem> menu) {
+    public void startOrdering(Scanner input, ArrayList<MenuItem> menu) {
         boolean ordering = true;
 
         while (ordering) {
@@ -76,19 +76,19 @@ public class Customer extends User {
 
             int categoryChoice;
             try {
-                categoryChoice = scanner.nextInt();
-                scanner.nextLine();
+                categoryChoice = input.nextInt();
+                input.nextLine();
             } catch (Exception e) {
-                scanner.nextLine();
+                input.nextLine();
                 System.out.println("Invalid input. Please enter a number.");
                 continue;
             }
 
             switch (categoryChoice) {
-                case 1 -> orderFromCategory(scanner, menu, "Appetizer");
-                case 2 -> orderFromCategory(scanner, menu, "Main Course");
-                case 3 -> orderFromCategory(scanner, menu, "Dessert");
-                case 4 -> orderFromCategory(scanner, menu, "Drinks");
+                case 1 -> orderFromCategory(input, menu, "Appetizer");
+                case 2 -> orderFromCategory(input, menu, "Main Course");
+                case 3 -> orderFromCategory(input, menu, "Dessert");
+                case 4 -> orderFromCategory(input, menu, "Drinks");
                 case 5 -> ordering = false;
                 default -> System.out.println("Invalid choice. Try again.");
             }
@@ -213,4 +213,3 @@ public class Customer extends User {
         return null;
     }
 }
-
