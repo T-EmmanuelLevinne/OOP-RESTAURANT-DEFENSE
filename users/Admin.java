@@ -23,11 +23,11 @@ public class Admin extends User {
     }
 
     // Admin login
-    public boolean login(Scanner scanner) {
+    public boolean login(Scanner input) {
         System.out.print("Enter admin username: ");
-        String userInput = scanner.nextLine();
+        String userInput = input.nextLine();
         System.out.print("Enter admin password: ");
-        String passInput = scanner.nextLine();
+        String passInput = input.nextLine();
 
         if (userInput.equals(username) && passInput.equals(password)) {
             System.out.println("Login successful! Welcome, " + getName() + "!");
@@ -39,7 +39,7 @@ public class Admin extends User {
     }
 
     // Modify menu by category
-    public void modifyMenuByCategory(ArrayList<MenuItem> menu, Scanner scanner) {
+    public void modifyMenuByCategory(ArrayList<MenuItem> menu, Scanner input) {
         boolean editing = true;
 
         while (editing) {
@@ -53,11 +53,11 @@ public class Admin extends User {
             System.out.print("Select category to manage: ");
 
             int catChoice = -1;
-            if (scanner.hasNextInt()) {
-                catChoice = scanner.nextInt();
-                scanner.nextLine();
+            if (input.hasNextInt()) {
+                catChoice = input.nextInt();
+                input.nextLine();
             } else {
-                scanner.nextLine();
+                input.nextLine();
                 System.out.println("Invalid input.");
                 continue;
             }
@@ -98,11 +98,11 @@ public class Admin extends User {
                 System.out.print("Choose an option: ");
 
                 int option = -1;
-                if (scanner.hasNextInt()) {
-                    option = scanner.nextInt();
-                    scanner.nextLine();
+                if (input.hasNextInt()) {
+                    option = input.nextInt();
+                    input.nextLine();
                 } else {
-                    scanner.nextLine();
+                    input.nextLine();
                     System.out.println("Invalid input.");
                     continue;
                 }
@@ -111,7 +111,7 @@ public class Admin extends User {
                     case 1 -> {
                         // Add new item
                         System.out.print("Enter name: ");
-                        String name = scanner.nextLine();
+                        String name = input.nextLine();
                         boolean itemExists = menu.stream().anyMatch(item -> item.getName().equals(name));
                         if (itemExists) {
                             System.out.println("Name already exists.");
@@ -119,16 +119,16 @@ public class Admin extends User {
                         }
                         else System.out.print("Enter price: ");
                         double price = -1;
-                        if (scanner.hasNextDouble()) {
-                            price = scanner.nextDouble();
-                            scanner.nextLine();
+                        if (input.hasNextDouble()) {
+                            price = input.nextDouble();
+                            input.nextLine();
                         } else {
-                            scanner.nextLine();
+                            input.nextLine();
                             System.out.println("It must be a number");
                             continue;
                         }
                         System.out.print("Enter description: ");
-                        String desc = scanner.nextLine();
+                        String desc = input.nextLine();
 
                         MenuItem newItem = switch (category) {
                             case "Appetizer" -> new Appetizer(name, price, desc);
@@ -152,8 +152,8 @@ public class Admin extends User {
                         }
 
                         System.out.print("Enter item number to edit: ");
-                        int itemNum = scanner.nextInt();
-                        scanner.nextLine(); // clear buffer
+                        int itemNum = input.nextInt();
+                        input.nextLine(); // clear buffer
 
                         if (itemNum < 1 || itemNum > catItems.size()) {
                             System.out.println("Invalid item number.");
@@ -164,7 +164,7 @@ public class Admin extends User {
 
                         // ----- NAME -----
                         System.out.print("New name (Enter 'next' to continue) (" + item.getName() + "): ");
-                        String newName = scanner.nextLine();
+                        String newName = input.nextLine();
 
                         if (!newName.equalsIgnoreCase("next") && !newName.isEmpty()) {
                             item.setName(newName);
@@ -172,7 +172,7 @@ public class Admin extends User {
 
                         // ----- PRICE -----
                         System.out.print("New price (Enter 'next' to continue) (" + item.getPrice() + "): ");
-                        String priceInput = scanner.nextLine();
+                        String priceInput = input.nextLine();
 
                         if (!priceInput.equalsIgnoreCase("next") && !priceInput.isEmpty()) {
                             try {
@@ -184,7 +184,7 @@ public class Admin extends User {
 
                         // ----- DESCRIPTION -----
                         System.out.print("New description (Enter 'next' to continue) (" + item.getDescription() + "): ");
-                        String newDesc = scanner.nextLine();
+                        String newDesc = input.nextLine();
 
                         if (!newDesc.equalsIgnoreCase("next") && !newDesc.isEmpty()) {
                             item.setDescription(newDesc);
@@ -201,8 +201,8 @@ public class Admin extends User {
                         }
 
                         System.out.print("Enter item number to remove: ");
-                        int itemNum = scanner.nextInt();
-                        scanner.nextLine();
+                        int itemNum = input.nextInt();
+                        input.nextLine();
 
                         if (itemNum < 1 || itemNum > catItems.size()) {
                             System.out.println("Invalid item number.");
@@ -220,5 +220,4 @@ public class Admin extends User {
         }
     }
 }
-
 
