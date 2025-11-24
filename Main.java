@@ -6,12 +6,12 @@ import display.MenuDisplay;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
 
         // Load menu from storage or initialize empty
         ArrayList<MenuItem> menu = MenuDisplay.loadMenu(); // MenuDisplay handles CSV read/write
 
-        Admin admin = new Admin();
+        Admin admin = new Admin(); // admin
 
         boolean running = true;
 
@@ -22,22 +22,22 @@ public class Main {
             System.out.println("3. Exit");
             System.out.print("Select: ");
 
-            if (scanner.hasNextInt()) {
-                int role = scanner.nextInt();
-                scanner.nextLine();
+            if (input.hasNextInt()) {
+                int role = input.nextInt();
+                input.nextLine();
 
                 switch (role) {
                     case 1 -> {
                         System.out.print("Enter your name: ");
-                        String cname = scanner.nextLine();
+                        String cname = input.nextLine();
                         Customer customer = new Customer(cname);
                         customer.displayInfo(); // Use inherited method following OOP principles
-                        customer.browseMenu(scanner, menu); // Customer handles its own browsing
+                        customer.browseMenu(input, menu); // Customer handles its own browsing
                     }
                     case 2 -> {
-                        if (admin.login(scanner)) {
+                        if (admin.login(input)) {
                             admin.displayInfo();     // Display admin info using inherited method
-                            admin.modifyMenuByCategory(menu, scanner);
+                            admin.modifyMenuByCategory(menu, input);
                             MenuDisplay.saveMenu(menu); // Save changes immediately
                         }
                     }
@@ -49,11 +49,11 @@ public class Main {
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } else {
-                scanner.nextLine();
+                input.nextLine();
                 System.out.println("Invalid input. Please enter a number (1-3).");
             }
         }
 
-        scanner.close();
+        input.close(); // closing a Scanner is crucial for proper resource management. If you open a Scanner to read from a file or another input stream and don't close it, it can lead to resource leaks, where the system resources remain allocated even after they are no longer needed. This can impact application performance and stability
     }
 }
